@@ -14,11 +14,11 @@ We use [`rn-fetch-blob`](https://github.com/joltup/rn-fetch-blob#installation) t
 
 _You should only have to do this once._
 
-    react-native link react-native-fetch-blob
+    react-native link rn-fetch-blob
 
 Or, if you want to add Android permissions to AndroidManifest.xml automatically, use this one:
 
-    RNFB_ANDROID_PERMISSIONS=true react-native link react-native-fetch-blob
+    RNFB_ANDROID_PERMISSIONS=true react-native link rn-fetch-blob
 
 ### Network Status - Android only
 Add the following line to your android/app/src/AndroidManifest.xml
