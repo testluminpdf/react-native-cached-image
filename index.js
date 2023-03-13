@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports.CachedImage = require('./CachedImage');
-module.exports.ImageCacheProvider = require('./ImageCacheProvider');
-module.exports.ImageCacheManager = require('./ImageCacheManager');
-module.exports.ImageCachePreloader = require('./ImageCachePreloader');
+export const CachedImage = require('./CachedImage');
+export const ImageCacheProvider = require('./ImageCacheProvider');
+export const { ImageCacheManager, ImageCacheManagerFactory } = require('./ImageCacheManager');
+export const ImageCachePreloader = require('./ImageCachePreloader');

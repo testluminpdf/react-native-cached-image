@@ -1,7 +1,7 @@
-import * as ReactNative from "react-native";
-import * as React from 'react'
-
 declare module "react-native-cached-image" {
+  import * as ReactNative from "react-native";
+  import * as React from 'react'
+
   namespace CachedImage {
     interface Image extends ReactNative.Image {
       /**
@@ -45,21 +45,21 @@ declare module "react-native-cached-image" {
 
     interface CacheOptions  {
       /** an object to be used as the headers when sending the request for the url */
-      headers: object
+      headers?: object
       /** the number of seconds each url will stay in the cache. default 2 weeks */
-      ttl: number
+      ttl?: number
       /**
        * array|bool an array of keys to use from the source.
        * uri query string or a bool value stating whether to use the entire query string or not. (default: false)
        */
-      useQueryParamsInCacheKey: string[] | boolean
+      useQueryParamsInCacheKey?: string[] | boolean
       /**
        * the root directory to use for caching, corresponds to CachedImage prop of same name, 
        * defaults to system cache directory
        */
-      cacheLocation: string
+      cacheLocation?: string
       /** true to allow self signed SSL URLs to be downloaded. default false */
-      allowSelfSignedSSL: boolean
+      allowSelfSignedSSL?: boolean
     }
 
     interface ImageCacheProvider extends CacheOptions {
@@ -83,10 +83,13 @@ declare module "react-native-cached-image" {
       files: CacheInfoFile[]
       size: number
     }
+  
+    interface ImageCacheManager {     
+      /** get image from cache according to the given options */
+      getFileInCache(url, options: CacheOptions): Promise<string>
 
-    interface ImageCacheManager {
       /** download an image and cache the result according to the given options */
-      downloadAndCacheUrl(url: String, options:CacheOptions ): Promise<any>
+      downloadAndCacheUrl(url: String, options:CacheOptions ): Promise<string>
 
       /** Delete the cached image corresponding to the given url */
       deleteUrl(urls: string, options?: CacheOptions): Promise<any>
@@ -111,12 +114,18 @@ declare module "react-native-cached-image" {
       //   BUNDLE: string
       // }
     }
+
+    class ImageCacheManagerFactory {
+      public static getImageCacheManager(defaultOptions?: CacheOptions, urlCache?: any, fs?: any, path?: any): ImageCacheManager
+    }
+
     interface ImageCachePreloader {
       preloadImages(urls: string[], imageCacheManager: ImageCacheManager, numberOfConcurrentPreloads: number): Promise<any>
     }
   }
   export class CachedImage extends React.Component<CachedImage.Image, any> {}
   export class ImageCacheProvider extends React.Component<CachedImage.ImageCacheProvider, any> {}
-  export const ImageCacheManager: CachedImage.ImageCacheManager
   export const ImageCachePreloader: CachedImage.ImageCachePreloader
+  export const ImageCacheManager: CachedImage.ImageCacheManager
+  export class ImageCacheManagerFactory extends CachedImage.ImageCacheManagerFactory {}
 }

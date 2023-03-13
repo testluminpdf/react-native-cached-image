@@ -10,7 +10,7 @@ This package is greatly inspired by [@jayesbe](https://github.com/jayesbe)'s ama
     - or -
     yarn add react-native-cached-image
 
-We use [`react-native-fetch-blob`](https://github.com/wkh237/react-native-fetch-blob#installation) to handle file system access in this package and it requires an extra step during the installation.  
+We use [`rn-fetch-blob`](https://github.com/joltup/rn-fetch-blob#installation) to handle file system access in this package and it requires an extra step during the installation.  
 
 _You should only have to do this once._
 
@@ -76,6 +76,14 @@ const {
 ### ImageCacheManager
 This is where all the cache magic takes place.
 The API usually takes a *URL* and a set of [`ImageCacheManagerOptions`](#imagecachemanageroptions).
+
+#### `ImageCacheManagerFactory.getImageCacheManager(): ImageCacheManager`
+Get the image cache manager instance.
+
+#### `ImageCacheManager.getFileInCache(url: String, options: ImageCacheManagerOptions): Promise<String>`
+Check the cache for the the URL (after removing fixing the query string according to `ImageCacheManagerOptions.useQueryParamsInCacheKey`).
+If the URL exists in cache and is not expired, resolve with the local cached file path.
+Otherwise, resolve with null.
 
 #### `ImageCacheManager.downloadAndCacheUrl(url: String, options: ImageCacheManagerOptions): Promise<String>`
 Check the cache for the the URL (after removing fixing the query string according to `ImageCacheManagerOptions.useQueryParamsInCacheKey`).

@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const RNFetchBlob = require('react-native-fetch-blob').default;
+const RNFetchBlob = require('rn-fetch-blob').default;
 
 const {
     fs
@@ -98,27 +98,11 @@ module.exports = {
                     })
                     .fetch('GET', fromUrl, headers)
                     .then(res => {
-                        if (res.respInfo.status === 304) {
-                            return Promise.resolve(toFile);
-                        }
-                        let status = Math.floor(res.respInfo.status / 100);
-                        if (status !== 2) {
-                            // TODO - log / return error?
-                            return Promise.reject();
-                        }
-
                         return RNFetchBlob.fs.stat(tmpFile)
                             .then(fileStats => {
-                                // Verify if the content was fully downloaded!
-                                if (res.respInfo.headers['Content-Length'] && res.respInfo.headers['Content-Length'] != fileStats.size) {
-                                    return Promise.reject();
-                                }
-
                                 // the download is complete and rename the temporary file
                                 return fs.mv(tmpFile, toFile);
                             });
-
-
                     })
                     .catch(error => {
                         // cleanup. will try re-download on next CachedImage mount.
